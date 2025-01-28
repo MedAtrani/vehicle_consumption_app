@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salma Moussaid - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899, #F97316);
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .contact-info a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: white;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .language-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .hobby-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .hobby-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .languages-grid,
+            .hobbies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <header class="header">
+                <div class="profile-photo">
+                    <!-- Remplacez le texte ci-dessous par votre photo en utilisant la balise img -->
+                    <!-- <img src="votre-photo.jpg" alt="Salma Moussaid"> -->
+                    <img src="C:\Users\Atrani\Downloads\salmaM.png" alt="Salma Moussaid">
+
+                    👩‍⚕️
+                </div>
+                <h1>SALMA MOUSSAID</h1>
+                <div class="contact-info">
+                    <a href="mailto:salma.moussaid1999@gmail.com">📧 salma.moussaid1999@gmail.com</a>
+                    <a href="tel:+212650072723">📞 +212 650-072723</a>
+                    <span>📍 Fes, Maroc</span>
+                </div>
+            </header>
+
+            <div class="grid">
+                <div class="left-column">
+                    <section class="section">
+                        <h2>🏢 Expériences</h2>
+                        <div class="card">
+                            <h3>Service d'Urologie</h3>
+                            <p>2023 | Hôpital Provincial Mohammed VI, Tanger</p>
+                            <p>Suivi et prise en charge des patients en pré et postopératoire.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Service de Chirurgie</h3>
+                            <p>2022 | Hôpital Provincial Mohammed VI, Tanger</p>
+                            <p>Assistance aux chirurgiens pendant les interventions chirurgicales.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Réanimation COVID-19</h3>
+                            <p>2021 | Hôpital Provincial Mohammed VI, Tanger</p>
+                            <p>Participation active à la prise en charge des patients atteints de la COVID-19.</p>
+                        </div>
+                    </section>
+
+                    <section class="section">
+                        <h2>🎓 Formation</h2>
+                        <div class="card">
+                            <h3>Institut Supérieur des Professions Infirmières et Techniques de Santé</h3>
+                            <p>2017 - 2020</p>
+                            <p>Licence en professions infirmières et techniques de santé</p>
+                            <p>Option Infirmier Polyvalent</p>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="right-column">
+                    <section class="section">
+                        <h2>💪 Compétences</h2>
+                        <div class="skills-grid">
+                            <div class="skill-card">Infirmière polyvalente</div>
+                            <div class="skill-card">Soins</div>
+                            <div class="skill-card">Gestion du Stress</div>
+                            <div class="skill-card">Collaboration</div>
+                            <div class="skill-card">Adaptabilité</div>
+                        </div>
+                    </section>
+
+                    <section class="section">
+                        <h2>🗣️ Langues</h2>
+                        <div class="languages-grid">
+                            <div class="language-card">
+                                <div>Français</div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="language-card">
+                                <div>Arabe</div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="language-card">
+                                <div>Anglais</div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section">
+                        <h2>🎯 Loisirs</h2>
+                        <div class="hobbies-grid">
+                            <div class="hobby-card">
+                                <div class="hobby-icon">📚</div>
+                                <div>La lecture</div>
+                            </div>
+                            <div class="hobby-card">
+                                <div class="hobby-icon">📷</div>
+                                <div>Photographie</div>
+                            </div>
+                            <div class="hobby-card">
+                                <div class="hobby-icon">✈️</div>
+                                <div>Voyage</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
