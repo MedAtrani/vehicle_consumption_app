@@ -3,197 +3,842 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCADA - Mine de Benguerir</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <title>Comparateur de Véhicules</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #f0f2f5;
-        }
-
-        .header {
-            background: #1a237e;
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .main-container {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-
-        .status-ok { background: #4caf50; }
-        .status-warning { background: #ff9800; }
-        .status-error { background: #f44336; }
-
-        .equipment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .equipment-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .alert-panel {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
-            padding: 10px;
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            font-weight: 300;
             margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .chart-container {
-            height: 300px;
-            margin-top: 20px;
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1em;
         }
 
-        .control-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 500;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #fff;
+            transform: scale(1.02);
+        }
+
+        .distance-inputs {
+            display: flex;
             gap: 10px;
-            margin-top: 10px;
+            align-items: center;
+        }
+
+        .distance-inputs input {
+            flex: 1;
+        }
+
+        .distance-inputs select {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
         }
 
         button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            background: #1a237e;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            position: relative;
+            overflow: hidden;
         }
 
         button:hover {
-            background: #283593;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result.success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .result.error {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .api-key-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .api-key-group input {
+            font-family: monospace;
+        }
+
+        .example {
+            font-style: italic;
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .data-table {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .data-row:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 10px;
+            border-radius: 8px;
+        }
+
+        .data-row.total {
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px 10px;
+        }
+
+        .data-label {
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .data-value {
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .result h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .km-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        .data-row.highlight {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 12px 10px;
+            font-weight: 600;
+        }
+
+        .vehicles-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .vehicle-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .vehicle-card.winner {
+            border: 3px solid #28a745;
+            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.3);
+        }
+
+        .vehicle-card.winner::before {
+            content: "🏆 PLUS ÉCONOMIQUE";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #28a745;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+
+        .cost-summary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .cost-row.total {
+            border-top: 2px solid rgba(255,255,255,0.3);
+            padding-top: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .comparison-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            display: none;
+        }
+
+        .comparison-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .winner-cell {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>SCADA - Mine de Benguerir</h1>
-        <div>
-            <span id="datetime"></span>
-            <span class="status-indicator status-ok"></span>
-            <span>Système en ligne</span>
-        </div>
-    </div>
-
     <div class="main-container">
-        <!-- Vue d'ensemble -->
-        <div class="card">
-            <h2>Vue d'ensemble</h2>
-            <div class="equipment-grid">
-                <div class="equipment-item">
-                    <span class="status-indicator status-ok"></span>
-                    Excavateur #1
-                    <div>Charge: 85%</div>
+        <div class="header">
+            <h1>🚗 Comparateur de Véhicules</h1>
+            <p>Analysez et comparez les coûts de vos véhicules</p>
+        </div>
+
+        <div class="container">
+            <form id="vehicleForm">
+                <div class="section-title">📝 Ajouter un véhicule</div>
+                
+                <div class="api-key-group">
+                    <label for="apiKey">Clé API OpenRouter :</label>
+                    <input 
+                        type="password" 
+                        id="apiKey" 
+                        placeholder="sk-or-v1-..." 
+                        value="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"
+                        required
+                    >
+                    <div class="example">Votre clé API OpenRouter pour accéder au modèle DeepSeek</div>
                 </div>
-                <div class="equipment-item">
-                    <span class="status-indicator status-warning"></span>
-                    Excavateur #2
-                    <div>Charge: 92%</div>
+                
+
+
+                <div class="input-group">
+                    <label for="vehicle">Véhicule :</label>
+                    <input 
+                        type="text" 
+                        id="vehicle" 
+                        placeholder="Toyota Yaris 2006" 
+                        required
+                    >
+                    <div class="example">Exemple : Toyota Yaris 2006, BMW X3 2018, Peugeot 308 2015</div>
                 </div>
-                <div class="equipment-item">
-                    <span class="status-indicator status-ok"></span>
-                    Convoyeur A
-                    <div>Vitesse: 42 m/min</div>
+
+                <div class="input-group">
+                    <label for="distance">Distance parcourue :</label>
+                    <div class="distance-inputs">
+                        <input 
+                            type="number" 
+                            id="distance" 
+                            placeholder="50" 
+                            min="1"
+                            required
+                        >
+                        <select id="distanceUnit" required>
+                            <option value="day">km/jour</option>
+                            <option value="month">km/mois</option>
+                        </select>
+                    </div>
+                    <div class="example">Entrez votre kilométrage moyen (ex: 50 km/jour ou 1500 km/mois)</div>
                 </div>
+
+                <div class="actions">
+                    <button type="submit" id="submitBtn">
+                        ➕ Analyser et ajouter le véhicule
+                    </button>
+                </div>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analyse en cours...</p>
+            </div>
+
+            <div class="result" id="result">
+                <div id="resultText"></div>
             </div>
         </div>
 
-        <!-- Alertes -->
-        <div class="card">
-            <h2>Alertes Actives</h2>
-            <div class="alert-panel">
-                <strong>Attention</strong>
-                <p>Maintenance préventive requise - Excavateur #2</p>
-            </div>
-            <div class="alert-panel">
-                <strong>Info</strong>
-                <p>Niveau de poussière élevé - Zone Sud</p>
-            </div>
-        </div>
+        <div class="vehicles-list" id="vehiclesList"></div>
 
-        <!-- Production -->
-        <div class="card">
-            <h2>Production en Temps Réel</h2>
-            <canvas id="productionChart"></canvas>
-        </div>
-
-        <!-- Contrôles -->
-        <div class="card">
-            <h2>Contrôles Système</h2>
-            <div class="control-panel">
-                <button onclick="alert('Commande envoyée')">Démarrer Excavateur</button>
-                <button onclick="alert('Commande envoyée')">Arrêt Urgence</button>
-                <button onclick="alert('Commande envoyée')">Ajuster Vitesse</button>
-                <button onclick="alert('Commande envoyée')">Reset Système</button>
+        <div class="comparison-section" id="comparisonSection">
+            <div class="comparison-title">📊 Comparaison des véhicules</div>
+            <div class="comparison-table" id="comparisonTable"></div>
+            <div class="actions">
+                <button class="btn-danger" onclick="clearAllVehicles()">
+                    🗑️ Supprimer tous les véhicules
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Mise à jour de l'heure
-        function updateDateTime() {
-            const now = new Date();
-            document.getElementById('datetime').textContent = now.toLocaleString();
-        }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
+        let vehicles = [];
+        
+        const form = document.getElementById('vehicleForm');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+        const submitBtn = document.getElementById('submitBtn');
+        const vehiclesList = document.getElementById('vehiclesList');
+        const comparisonSection = document.getElementById('comparisonSection');
 
-        // Graphique de production
-        const ctx = document.getElementById('productionChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['8h', '9h', '10h', '11h', '12h', '13h'],
-                datasets: [{
-                    label: 'Production (tonnes)',
-                    data: [250, 280, 260, 300, 290, 310],
-                    borderColor: '#1a237e',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const vehicle = document.getElementById('vehicle').value.trim();
+            const distance = document.getElementById('distance').value.trim();
+            const distanceUnit = document.getElementById('distanceUnit').value;
+            
+            if (!apiKey || !vehicle || !distance) {
+                showResult('Veuillez remplir tous les champs', 'error');
+                return;
+            }
+
+            // Vérifier si le véhicule existe déjà
+            if (vehicles.some(v => v.name.toLowerCase() === vehicle.toLowerCase())) {
+                showResult('Ce véhicule a déjà été ajouté', 'error');
+                return;
+            }
+
+            // Calculer les km par an
+            const kmPerYear = calculateKmPerYear(parseInt(distance), distanceUnit);
+
+            // Afficher le loading
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            submitBtn.disabled = true;
+
+            try {
+                const vehicleData = await getVehicleConsumption(apiKey, vehicle, kmPerYear);
+                addVehicle(vehicle, vehicleData, kmPerYear);
+                showResult(`✅ ${vehicle} ajouté avec succès!`, 'success');
+                
+                // Réinitialiser le formulaire
+                document.getElementById('vehicle').value = '';
+                document.getElementById('distance').value = '';
+                
+                updateComparison();
+            } catch (error) {
+                showResult(`Erreur : ${error.message}`, 'error');
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        async function getVehicleConsumption(apiKey, vehicle, kmPerYear) {
+            const url = "https://openrouter.ai/api/v1/chat/completions";
+            
+            const prompt = `Pour la voiture suivante : ${vehicle}, avec un kilométrage annuel de ${kmPerYear} km/an, donne-moi les informations suivantes au format exact demandé :
+
+Consommation : [valeur] L/100km
+Assurance/an : [valeur] MAD
+Carburant/an : [valeur calculée selon ${kmPerYear} km/an et prix essence Maroc] MAD  
+Taxe annuelle : [valeur] MAD
+Entretien/an : [valeur] MAD
+Prix essence : [prix actuel au Maroc] MAD/L
+
+Donne uniquement ces 6 lignes avec les valeurs moyennes pour le Maroc, sans texte supplémentaire. Calcule précisément le carburant/an avec la consommation et le kilométrage donné.`;
+            
+            const requestData = {
+                model: "deepseek/deepseek-r1:free",
+                messages: [{"role": "user", "content": prompt}]
+            };
+
+            const headers = {
+                "Authorization": `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+                "HTTP-Referer": window.location.origin,
+                "X-Title": "VehiculeTestApp"
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`${response.status} : ${errorText}`);
+                }
+
+                const result = await response.json();
+                const text = result.choices[0].message.content;
+                
+                const data = parseVehicleData(text);
+                
+                if (data.consommation) {
+                    return data;
+                } else {
+                    throw new Error(`Données non trouvées dans la réponse : ${text}`);
+                }
+            } catch (error) {
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    throw new Error('Erreur de connexion. Vérifiez votre connexion internet.');
+                }
+                throw error;
+            }
+        }
+
+        function parseVehicleData(text) {
+            const data = {};
+            
+            const patterns = {
+                consommation: /Consommation\s*:\s*([0-9,\.]+)\s*L\/100km/i,
+                assurance: /Assurance\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
+                carburant: /Carburant\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
+                taxe: /Taxe annuelle\s*:\s*([0-9\s,\.]+)\s*MAD/i,
+                entretien: /Entretien\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
+                prixEssence: /Prix essence\s*:\s*([0-9,\.]+)\s*MAD\/L/i
+            };
+            
+            for (const [key, pattern] of Object.entries(patterns)) {
+                const match = text.match(pattern);
+                if (match) {
+                    data[key] = match[1].replace(/\s/g, '').replace(',', '.');
                 }
             }
+            
+            return data;
+        }
+
+        function calculateKmPerYear(distance, unit) {
+            if (unit === 'day') {
+                return distance * 365;
+            } else if (unit === 'month') {
+                return distance * 12;
+            }
+            return distance;
+        }
+
+        function addVehicle(name, data, kmPerYear) {
+            const totalAnnuel = calculateTotalCost(data);
+            const totalMensuel = totalAnnuel / 12;
+            
+            const vehicle = {
+                id: Date.now(),
+                name,
+                data,
+                kmPerYear,
+                totalAnnuel,
+                totalMensuel
+            };
+            
+            vehicles.push(vehicle);
+            renderVehicles();
+        }
+
+        function calculateTotalCost(data) {
+            return (parseFloat(data.assurance) || 0) + 
+                   (parseFloat(data.carburant) || 0) + 
+                   (parseFloat(data.taxe) || 0) + 
+                   (parseFloat(data.entretien) || 0);
+        }
+
+        function renderVehicles() {
+            vehiclesList.innerHTML = '';
+            
+            vehicles.forEach(vehicle => {
+                const isWinner = vehicle.totalAnnuel === Math.min(...vehicles.map(v => v.totalAnnuel)) && vehicles.length > 1;
+                
+                const vehicleCard = document.createElement('div');
+                vehicleCard.className = `vehicle-card ${isWinner ? 'winner' : ''}`;
+                vehicleCard.innerHTML = `
+                    <div class="vehicle-header">
+                        <div class="vehicle-name">🚗 ${vehicle.name}</div>
+                        <button class="delete-btn" onclick="removeVehicle(${vehicle.id})">❌</button>
+                    </div>
+                    
+                    <div class="cost-summary">
+                        <div class="cost-row total">
+                            <span>💰 Coût total/an</span>
+                            <span>${formatNumber(vehicle.totalAnnuel)} MAD</span>
+                        </div>
+                        <div class="cost-row total">
+                            <span>📅 Coût total/mois</span>
+                            <span>${formatNumber(vehicle.totalMensuel)} MAD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="km-info">
+                        📏 Kilométrage annuel : ${formatNumber(vehicle.kmPerYear)} km/an
+                    </div>
+                    
+                    <div class="data-table">
+                        <div class="data-row">
+                            <div class="data-label">🚗 Consommation</div>
+                            <div class="data-value">${vehicle.data.consommation} L/100km</div>
+                        </div>
+                        ${vehicle.data.prixEssence ? `
+                        <div class="data-row">
+                            <div class="data-label">⛽ Prix essence</div>
+                            <div class="data-value">${vehicle.data.prixEssence} MAD/L</div>
+                        </div>
+                        ` : ''}
+                        <div class="data-row">
+                            <div class="data-label">🛡️ Assurance/an</div>
+                            <div class="data-value">${formatNumber(vehicle.data.assurance)} MAD</div>
+                        </div>
+                        <div class="data-row highlight">
+                            <div class="data-label">⛽ Carburant/an</div>
+                            <div class="data-value">${formatNumber(vehicle.data.carburant)} MAD</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">🏛️ Taxe annuelle</div>
+                            <div class="data-value">${formatNumber(vehicle.data.taxe)} MAD</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">🔧 Entretien/an</div>
+                            <div class="data-value">${formatNumber(vehicle.data.entretien)} MAD</div>
+                        </div>
+                    </div>
+                `;
+                
+                vehiclesList.appendChild(vehicleCard);
+            });
+        }
+
+        function removeVehicle(id) {
+            vehicles = vehicles.filter(v => v.id !== id);
+            renderVehicles();
+            updateComparison();
+        }
+
+        function clearAllVehicles() {
+            if (confirm('Êtes-vous sûr de vouloir supprimer tous les véhicules ?')) {
+                vehicles = [];
+                renderVehicles();
+                updateComparison();
+            }
+        }
+
+        function updateComparison() {
+            if (vehicles.length < 2) {
+                comparisonSection.style.display = 'none';
+                return;
+            }
+
+            comparisonSection.style.display = 'block';
+            
+            // Trouver le véhicule le plus économique
+            const mostEconomical = vehicles.reduce((min, vehicle) => 
+                vehicle.totalAnnuel < min.totalAnnuel ? vehicle : min
+            );
+
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critère</th>
+                            ${vehicles.map(v => `<th>${v.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🚗 Consommation (L/100km)</strong></td>
+                            ${vehicles.map(v => `<td>${v.data.consommation}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>🛡️ Assurance/an (MAD)</strong></td>
+                            ${vehicles.map(v => `<td>${formatNumber(v.data.assurance)}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>⛽ Carburant/an (MAD)</strong></td>
+                            ${vehicles.map(v => `<td>${formatNumber(v.data.carburant)}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>🏛️ Taxe annuelle (MAD)</strong></td>
+                            ${vehicles.map(v => `<td>${formatNumber(v.data.taxe)}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>🔧 Entretien/an (MAD)</strong></td>
+                            ${vehicles.map(v => `<td>${formatNumber(v.data.entretien)}</td>`).join('')}
+                        </tr>
+                        <tr style="background: #f8f9fa; font-weight: bold;">
+                            <td><strong>💰 TOTAL/AN (MAD)</strong></td>
+                            ${vehicles.map(v => `<td class="${v.id === mostEconomical.id ? 'winner-cell' : ''}">${formatNumber(v.totalAnnuel)}</td>`).join('')}
+                        </tr>
+                        <tr style="background: #e9ecef; font-weight: bold;">
+                            <td><strong>📅 TOTAL/MOIS (MAD)</strong></td>
+                            ${vehicles.map(v => `<td class="${v.id === mostEconomical.id ? 'winner-cell' : ''}">${formatNumber(v.totalMensuel)}</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="text-align: center; margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #28a745, #20c997); color: white; border-radius: 15px;">
+                    <h3>🏆 Véhicule le plus économique : ${mostEconomical.name}</h3>
+                    <p>Économie annuelle : ${formatNumber(Math.max(...vehicles.map(v => v.totalAnnuel)) - mostEconomical.totalAnnuel)} MAD</p>
+                    <p>Économie mensuelle : ${formatNumber((Math.max(...vehicles.map(v => v.totalAnnuel)) - mostEconomical.totalAnnuel) / 12)} MAD</p>
+                </div>
+            `;
+            
+            document.getElementById('comparisonTable').innerHTML = tableHTML;
+        }
+
+        function showResult(message, type) {
+            resultText.textContent = message;
+            result.className = `result ${type}`;
+            result.style.display = 'block';
+            
+            // Masquer après 3 secondes
+            setTimeout(() => {
+                result.style.display = 'none';
+            }, 3000);
+        }
+
+        function formatNumber(num) {
+            if (!num) return '0';
+            return parseFloat(num).toLocaleString('fr-FR', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+
+        // Animation au chargement
+        window.addEventListener('load', () => {
+            document.querySelector('.main-container').style.animation = 'fadeIn 0.8s ease';
         });
     </script>
 </body>
