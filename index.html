@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparateur de Véhicules</title>
+    <title>Maroc Voyages - Découvrez le Maroc Authentique</title>
     <style>
         * {
             margin: 0;
@@ -13,833 +13,651 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.1em;
         }
 
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .input-section {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            font-weight: 500;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-        }
-
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            background: #fff;
-            transform: scale(1.02);
-        }
-
-        .distance-inputs {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .distance-inputs input {
-            flex: 1;
-        }
-
-        .distance-inputs select {
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            background: #f8f9fa;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-        }
-
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
-        }
-
-        .loading {
-            display: none;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .result {
-            margin-top: 30px;
-            padding: 20px;
             border-radius: 15px;
-            display: none;
-            animation: fadeIn 0.5s ease;
+            margin-bottom: 30px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        .result.success {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
-        .result.error {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            color: white;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .api-key-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .api-key-group input {
-            font-family: monospace;
-        }
-
-        .example {
-            font-style: italic;
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .data-table {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .data-row {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            flex-wrap: wrap;
         }
 
-        .data-row:hover {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 12px 10px;
-            border-radius: 8px;
-        }
-
-        .data-row.total {
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
-            border-bottom: none;
+        .logo {
+            font-size: 2rem;
             font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 15px 10px;
+            color: #d35400;
+            display: flex;
+            align-items: center;
         }
 
-        .data-label {
+        .logo::before {
+            content: "🏜️";
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #d35400;
+        }
+
+        .hero {
+            text-align: center;
+            margin: 50px 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
             opacity: 0.9;
         }
 
-        .data-value {
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-
-        .result h3 {
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            text-align: center;
-        }
-
-        .km-info {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 0.95em;
-        }
-
-        .data-row.highlight {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 12px 10px;
-            font-weight: 600;
-        }
-
-        .vehicles-list {
+        .main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: 1fr 300px;
             gap: 30px;
             margin-top: 30px;
         }
 
-        .vehicle-card {
+        .content-area {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        .vehicle-card.winner {
-            border: 3px solid #28a745;
-            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.3);
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: fit-content;
         }
 
-        .vehicle-card.winner::before {
-            content: "🏆 PLUS ÉCONOMIQUE";
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #28a745;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
-        }
-
-        .vehicle-header {
+        .tab-buttons {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
-        .vehicle-name {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .delete-btn {
-            background: #dc3545;
+        .tab-button {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 12px;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .delete-btn:hover {
-            background: #c82333;
-            transform: scale(1.1);
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 90, 82, 0.4);
         }
 
-        .cost-summary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
+        .tab-button.active {
+            background: linear-gradient(45deg, #d35400, #e67e22);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 84, 0, 0.4);
         }
 
-        .cost-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .cost-row.total {
-            border-top: 2px solid rgba(255,255,255,0.3);
-            padding-top: 10px;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .comparison-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
+        .tab-content {
             display: none;
         }
 
-        .comparison-title {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2em;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
 
-        .comparison-table {
-            overflow-x: auto;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .trip-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            border-left: 4px solid #d35400;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .trip-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .trip-details {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .trip-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d35400;
+            float: right;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
 
-        th, td {
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
             padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
         }
 
-        th {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d35400;
+        }
+
+        .member-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-weight: 600;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
-        .winner-cell {
-            background: rgba(40, 167, 69, 0.1);
-            color: #28a745;
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .actions {
-            text-align: center;
-            margin-top: 20px;
+        .booking-status {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status-pending {
+            background: #f39c12;
+            color: white;
+        }
+
+        .status-cancelled {
+            background: #e74c3c;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .notification {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1>🚗 Comparateur de Véhicules</h1>
-            <p>Analysez et comparez les coûts de vos véhicules</p>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">Maroc Voyages</div>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showTab('voyages')">Nos Voyages</a></li>
+                        <li><a href="#" onclick="showTab('reserver')">Réserver</a></li>
+                        <li><a href="#" onclick="showTab('membres')">Espace Membre</a></li>
+                        <li><a href="#" onclick="showTab('contact')">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="hero">
+            <h1>Découvrez le Maroc Authentique</h1>
+            <p>Votre intermédiaire de confiance pour des voyages organisés inoubliables</p>
         </div>
 
-        <div class="container">
-            <form id="vehicleForm">
-                <div class="section-title">📝 Ajouter un véhicule</div>
-                
-                <div class="api-key-group">
-                    <label for="apiKey">Clé API OpenRouter :</label>
-                    <input 
-                        type="password" 
-                        id="apiKey" 
-                        placeholder="sk-or-v1-..." 
-                        value="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"
-                        required
-                    >
-                    <div class="example">Votre clé API OpenRouter pour accéder au modèle DeepSeek</div>
-                </div>
-                
-
-
-                <div class="input-group">
-                    <label for="vehicle">Véhicule :</label>
-                    <input 
-                        type="text" 
-                        id="vehicle" 
-                        placeholder="Toyota Yaris 2006" 
-                        required
-                    >
-                    <div class="example">Exemple : Toyota Yaris 2006, BMW X3 2018, Peugeot 308 2015</div>
+        <div class="main-content">
+            <div class="content-area">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('voyages')">🏛️ Nos Voyages</button>
+                    <button class="tab-button" onclick="showTab('reserver')">📅 Réserver</button>
+                    <button class="tab-button" onclick="showTab('membres')">👥 Espace Membre</button>
+                    <button class="tab-button" onclick="showTab('contact')">📞 Contact</button>
                 </div>
 
-                <div class="input-group">
-                    <label for="distance">Distance parcourue :</label>
-                    <div class="distance-inputs">
-                        <input 
-                            type="number" 
-                            id="distance" 
-                            placeholder="50" 
-                            min="1"
-                            required
-                        >
-                        <select id="distanceUnit" required>
-                            <option value="day">km/jour</option>
-                            <option value="month">km/mois</option>
-                        </select>
+                <div id="voyages" class="tab-content active">
+                    <h2>Voyages Organisés Disponibles</h2>
+                    
+                    <div class="trip-card">
+                        <div class="trip-title">🏔️ Circuit Impérial - Marrakech, Fès, Rabat</div>
+                        <div class="trip-details">
+                            📅 7 jours / 6 nuits • 🏨 Hôtels 4* • 🚌 Transport inclus • 🍽️ Pension complète
+                        </div>
+                        <div class="trip-price">2,500 MAD/pers</div>
+                        <button class="btn" onclick="selectTrip('Circuit Impérial', 2500)">Réserver maintenant</button>
+                        <div style="clear: both;"></div>
                     </div>
-                    <div class="example">Entrez votre kilométrage moyen (ex: 50 km/jour ou 1500 km/mois)</div>
+
+                    <div class="trip-card">
+                        <div class="trip-title">🏜️ Aventure Sahara - Merzouga & Erg Chebbi</div>
+                        <div class="trip-details">
+                            📅 4 jours / 3 nuits • ⛺ Camping désert • 🐪 Excursion chameau • 🌟 Nuit sous étoiles
+                        </div>
+                        <div class="trip-price">1,800 MAD/pers</div>
+                        <button class="btn" onclick="selectTrip('Aventure Sahara', 1800)">Réserver maintenant</button>
+                        <div style="clear: both;"></div>
+                    </div>
+
+                    <div class="trip-card">
+                        <div class="trip-title">🌊 Découverte Côtière - Casablanca, Rabat, Essaouira</div>
+                        <div class="trip-details">
+                            📅 5 jours / 4 nuits • 🏖️ Plages atlantiques • 🎨 Médinas historiques • 🐟 Dégustation fruits de mer
+                        </div>
+                        <div class="trip-price">2,200 MAD/pers</div>
+                        <button class="btn" onclick="selectTrip('Découverte Côtière', 2200)">Réserver maintenant</button>
+                        <div style="clear: both;"></div>
+                    </div>
+
+                    <div class="trip-card">
+                        <div class="trip-title">⛰️ Atlas & Vallées - Ouarzazate, Vallée des Roses</div>
+                        <div class="trip-details">
+                            📅 6 jours / 5 nuits • 🏔️ Montagnes Atlas • 🌹 Vallée des Roses • 🏘️ Villages berbères
+                        </div>
+                        <div class="trip-price">2,800 MAD/pers</div>
+                        <button class="btn" onclick="selectTrip('Atlas & Vallées', 2800)">Réserver maintenant</button>
+                        <div style="clear: both;"></div>
+                    </div>
                 </div>
 
-                <div class="actions">
-                    <button type="submit" id="submitBtn">
-                        ➕ Analyser et ajouter le véhicule
+                <div id="reserver" class="tab-content">
+                    <h2>Réserver Votre Voyage</h2>
+                    
+                    <div class="notification">
+                        <strong>Information:</strong> Remplissez ce formulaire pour réserver votre voyage. Notre équipe vous contactera sous 24h.
+                    </div>
+
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label>Voyage sélectionné</label>
+                            <select id="selectedTrip" required>
+                                <option value="">Choisissez un voyage</option>
+                                <option value="Circuit Impérial">🏛️ Circuit Impérial - 2,500 MAD</option>
+                                <option value="Aventure Sahara">🏜️ Aventure Sahara - 1,800 MAD</option>
+                                <option value="Découverte Côtière">🌊 Découverte Côtière - 2,200 MAD</option>
+                                <option value="Atlas & Vallées">⛰️ Atlas & Vallées - 2,800 MAD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nom complet</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nombre de personnes</label>
+                            <select id="participants" required>
+                                <option value="">Sélectionnez</option>
+                                <option value="1">1 personne</option>
+                                <option value="2">2 personnes</option>
+                                <option value="3">3 personnes</option>
+                                <option value="4">4 personnes</option>
+                                <option value="5+">5 personnes ou plus</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date préférée de départ</label>
+                            <input type="date" id="departureDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Demandes spéciales</label>
+                            <textarea id="specialRequests" rows="4" placeholder="Régime alimentaire, accessibilité, célébrations..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 1.1rem;">
+                            Confirmer la réservation
+                        </button>
+                    </form>
+                </div>
+
+                <div id="membres" class="tab-content">
+                    <h2>Espace Membre</h2>
+                    
+                    <div class="member-info">
+                        <h3>👤 Profil Membre</h3>
+                        <p><strong>Nom:</strong> <span id="memberName">Ahmed Bennani</span></p>
+                        <p><strong>Email:</strong> <span id="memberEmail">ahmed.bennani@email.com</span></p>
+                        <p><strong>Membre depuis:</strong> Janvier 2023</p>
+                        <p><strong>Statut:</strong> <span style="background: gold; color: #333; padding: 3px 8px; border-radius: 12px;">VIP</span></p>
+
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">8</div>
+                                <div>Voyages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">15%</div>
+                                <div>Réduction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">245</div>
+                                <div>Points</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>📋 Mes Réservations</h3>
+
+                    <div class="trip-card">
+                        <div class="trip-title">🏜️ Aventure Sahara - Merzouga</div>
+                        <div class="trip-details">
+                            📅 15-18 Septembre 2025 • 👥 2 personnes • Réf: #MV2025089
+                        </div>
+                        <span class="booking-status status-confirmed">Confirmé</span>
+                        <div class="trip-price">3,060 MAD</div>
+                        <div style="clear: both; margin-top: 10px;">
+                            <button class="btn">Voir détails</button>
+                            <button class="btn" style="background: #e74c3c; margin-left: 10px;">Annuler</button>
+                        </div>
+                    </div>
+
+                    <div class="trip-card">
+                        <div class="trip-title">🏛️ Circuit Impérial</div>
+                        <div class="trip-details">
+                            📅 5-11 Octobre 2025 • 👥 4 personnes • Réf: #MV2025156
+                        </div>
+                        <span class="booking-status status-pending">En attente</span>
+                        <div class="trip-price">8,500 MAD</div>
+                        <div style="clear: both; margin-top: 10px;">
+                            <button class="btn">Voir détails</button>
+                            <button class="btn" style="background: #f39c12; margin-left: 10px;">Modifier</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact" class="tab-content">
+                    <h2>Contactez-nous</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white; padding: 20px; border-radius: 12px;">
+                            <h3>📍 Adresse</h3>
+                            <p>Avenue Mohammed V<br>Casablanca, Maroc<br>20250</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #00b894 0%, #00a085 100%); color: white; padding: 20px; border-radius: 12px;">
+                            <h3>📞 Téléphone</h3>
+                            <p>+212 522 123 456<br>+212 661 234 567</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); color: white; padding: 20px; border-radius: 12px;">
+                            <h3>✉️ Email</h3>
+                            <p>info@marocvoyages.com<br>reservation@marocvoyages.com</p>
+                        </div>
+                    </div>
+
+                    <h3>💬 Envoyez-nous un message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Sujet</label>
+                            <select required>
+                                <option value="">Choisissez un sujet</option>
+                                <option value="reservation">Question sur réservation</option>
+                                <option value="voyage">Information voyage</option>
+                                <option value="annulation">Annulation</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; padding: 15px;">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>🎯 Pourquoi nous choisir ?</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">✅ <strong>15 ans d'expérience</strong></li>
+                    <li style="margin-bottom: 10px;">✅ <strong>Guides locaux certifiés</strong></li>
+                    <li style="margin-bottom: 10px;">✅ <strong>Prix transparents</strong></li>
+                    <li style="margin-bottom: 10px;">✅ <strong>Support 24/7</strong></li>
+                    <li style="margin-bottom: 10px;">✅ <strong>Assurance voyage incluse</strong></li>
+                </ul>
+
+                <div style="background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); color: white; padding: 20px; border-radius: 12px; margin-top: 30px; text-align: center;">
+                    <h3>🎁 Offre Spéciale</h3>
+                    <p>Réservez avant le 30 septembre et bénéficiez de <strong>10% de réduction</strong> sur tous nos circuits !</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">Code: MAROC2025</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3>📞 Besoin d'aide ?</h3>
+                    <p>Notre équipe est disponible du lundi au samedi de 9h à 18h.</p>
+                    <button class="btn" style="width: 100%; margin-top: 10px;">
+                        Appeler maintenant
                     </button>
                 </div>
-            </form>
-
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Analyse en cours...</p>
-            </div>
-
-            <div class="result" id="result">
-                <div id="resultText"></div>
-            </div>
-        </div>
-
-        <div class="vehicles-list" id="vehiclesList"></div>
-
-        <div class="comparison-section" id="comparisonSection">
-            <div class="comparison-title">📊 Comparaison des véhicules</div>
-            <div class="comparison-table" id="comparisonTable"></div>
-            <div class="actions">
-                <button class="btn-danger" onclick="clearAllVehicles()">
-                    🗑️ Supprimer tous les véhicules
-                </button>
             </div>
         </div>
     </div>
 
     <script>
-        let vehicles = [];
-        
-        const form = document.getElementById('vehicleForm');
-        const loading = document.getElementById('loading');
-        const result = document.getElementById('result');
-        const resultText = document.getElementById('resultText');
-        const submitBtn = document.getElementById('submitBtn');
-        const vehiclesList = document.getElementById('vehiclesList');
-        const comparisonSection = document.getElementById('comparisonSection');
+        // Système de navigation par onglets
+        function showTab(tabName) {
+            // Masquer tous les contenus d'onglets
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Désactiver tous les boutons d'onglets
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+            
+            // Afficher le contenu de l'onglet sélectionné
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activer le bouton correspondant
+            event.target.classList.add('active');
+        }
 
-        form.addEventListener('submit', async (e) => {
+        // Fonction pour sélectionner un voyage depuis la liste
+        function selectTrip(tripName, price) {
+            showTab('reserver');
+            document.getElementById('selectedTrip').value = tripName;
+            
+            // Activer l'onglet réserver
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-button')[1].classList.add('active');
+        }
+
+        // Gestion du formulaire de réservation
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const apiKey = document.getElementById('apiKey').value.trim();
-            const vehicle = document.getElementById('vehicle').value.trim();
-            const distance = document.getElementById('distance').value.trim();
-            const distanceUnit = document.getElementById('distanceUnit').value;
+            const formData = {
+                trip: document.getElementById('selectedTrip').value,
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                participants: document.getElementById('participants').value,
+                date: document.getElementById('departureDate').value,
+                requests: document.getElementById('specialRequests').value
+            };
             
-            if (!apiKey || !vehicle || !distance) {
-                showResult('Veuillez remplir tous les champs', 'error');
-                return;
-            }
-
-            // Vérifier si le véhicule existe déjà
-            if (vehicles.some(v => v.name.toLowerCase() === vehicle.toLowerCase())) {
-                showResult('Ce véhicule a déjà été ajouté', 'error');
-                return;
-            }
-
-            // Calculer les km par an
-            const kmPerYear = calculateKmPerYear(parseInt(distance), distanceUnit);
-
-            // Afficher le loading
-            loading.style.display = 'block';
-            result.style.display = 'none';
-            submitBtn.disabled = true;
-
-            try {
-                const vehicleData = await getVehicleConsumption(apiKey, vehicle, kmPerYear);
-                addVehicle(vehicle, vehicleData, kmPerYear);
-                showResult(`✅ ${vehicle} ajouté avec succès!`, 'success');
-                
-                // Réinitialiser le formulaire
-                document.getElementById('vehicle').value = '';
-                document.getElementById('distance').value = '';
-                
-                updateComparison();
-            } catch (error) {
-                showResult(`Erreur : ${error.message}`, 'error');
-            } finally {
-                loading.style.display = 'none';
-                submitBtn.disabled = false;
-            }
+            alert(`🎉 Réservation envoyée avec succès !\n\nVoyage: ${formData.trip}\nNom: ${formData.name}\nEmail: ${formData.email}\n\nNotre équipe vous contactera sous 24h pour confirmer votre réservation.`);
+            
+            // Réinitialiser le formulaire
+            this.reset();
         });
 
-        async function getVehicleConsumption(apiKey, vehicle, kmPerYear) {
-            const url = "https://openrouter.ai/api/v1/chat/completions";
-            
-            const prompt = `Pour la voiture suivante : ${vehicle}, avec un kilométrage annuel de ${kmPerYear} km/an, donne-moi les informations suivantes au format exact demandé :
-
-Consommation : [valeur] L/100km
-Assurance/an : [valeur] MAD
-Carburant/an : [valeur calculée selon ${kmPerYear} km/an et prix essence Maroc] MAD  
-Taxe annuelle : [valeur] MAD
-Entretien/an : [valeur] MAD
-Prix essence : [prix actuel au Maroc] MAD/L
-
-Donne uniquement ces 6 lignes avec les valeurs moyennes pour le Maroc, sans texte supplémentaire. Calcule précisément le carburant/an avec la consommation et le kilométrage donné.`;
-            
-            const requestData = {
-                model: "deepseek/deepseek-r1:free",
-                messages: [{"role": "user", "content": prompt}]
-            };
-
-            const headers = {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json",
-                "HTTP-Referer": window.location.origin,
-                "X-Title": "VehiculeTestApp"
-            };
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(requestData)
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`${response.status} : ${errorText}`);
-                }
-
-                const result = await response.json();
-                const text = result.choices[0].message.content;
-                
-                const data = parseVehicleData(text);
-                
-                if (data.consommation) {
-                    return data;
-                } else {
-                    throw new Error(`Données non trouvées dans la réponse : ${text}`);
-                }
-            } catch (error) {
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    throw new Error('Erreur de connexion. Vérifiez votre connexion internet.');
-                }
-                throw error;
-            }
-        }
-
-        function parseVehicleData(text) {
-            const data = {};
-            
-            const patterns = {
-                consommation: /Consommation\s*:\s*([0-9,\.]+)\s*L\/100km/i,
-                assurance: /Assurance\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
-                carburant: /Carburant\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
-                taxe: /Taxe annuelle\s*:\s*([0-9\s,\.]+)\s*MAD/i,
-                entretien: /Entretien\/an\s*:\s*([0-9\s,\.]+)\s*MAD/i,
-                prixEssence: /Prix essence\s*:\s*([0-9,\.]+)\s*MAD\/L/i
-            };
-            
-            for (const [key, pattern] of Object.entries(patterns)) {
-                const match = text.match(pattern);
-                if (match) {
-                    data[key] = match[1].replace(/\s/g, '').replace(',', '.');
-                }
-            }
-            
-            return data;
-        }
-
-        function calculateKmPerYear(distance, unit) {
-            if (unit === 'day') {
-                return distance * 365;
-            } else if (unit === 'month') {
-                return distance * 12;
-            }
-            return distance;
-        }
-
-        function addVehicle(name, data, kmPerYear) {
-            const totalAnnuel = calculateTotalCost(data);
-            const totalMensuel = totalAnnuel / 12;
-            
-            const vehicle = {
-                id: Date.now(),
-                name,
-                data,
-                kmPerYear,
-                totalAnnuel,
-                totalMensuel
-            };
-            
-            vehicles.push(vehicle);
-            renderVehicles();
-        }
-
-        function calculateTotalCost(data) {
-            return (parseFloat(data.assurance) || 0) + 
-                   (parseFloat(data.carburant) || 0) + 
-                   (parseFloat(data.taxe) || 0) + 
-                   (parseFloat(data.entretien) || 0);
-        }
-
-        function renderVehicles() {
-            vehiclesList.innerHTML = '';
-            
-            vehicles.forEach(vehicle => {
-                const isWinner = vehicle.totalAnnuel === Math.min(...vehicles.map(v => v.totalAnnuel)) && vehicles.length > 1;
-                
-                const vehicleCard = document.createElement('div');
-                vehicleCard.className = `vehicle-card ${isWinner ? 'winner' : ''}`;
-                vehicleCard.innerHTML = `
-                    <div class="vehicle-header">
-                        <div class="vehicle-name">🚗 ${vehicle.name}</div>
-                        <button class="delete-btn" onclick="removeVehicle(${vehicle.id})">❌</button>
-                    </div>
-                    
-                    <div class="cost-summary">
-                        <div class="cost-row total">
-                            <span>💰 Coût total/an</span>
-                            <span>${formatNumber(vehicle.totalAnnuel)} MAD</span>
-                        </div>
-                        <div class="cost-row total">
-                            <span>📅 Coût total/mois</span>
-                            <span>${formatNumber(vehicle.totalMensuel)} MAD</span>
-                        </div>
-                    </div>
-                    
-                    <div class="km-info">
-                        📏 Kilométrage annuel : ${formatNumber(vehicle.kmPerYear)} km/an
-                    </div>
-                    
-                    <div class="data-table">
-                        <div class="data-row">
-                            <div class="data-label">🚗 Consommation</div>
-                            <div class="data-value">${vehicle.data.consommation} L/100km</div>
-                        </div>
-                        ${vehicle.data.prixEssence ? `
-                        <div class="data-row">
-                            <div class="data-label">⛽ Prix essence</div>
-                            <div class="data-value">${vehicle.data.prixEssence} MAD/L</div>
-                        </div>
-                        ` : ''}
-                        <div class="data-row">
-                            <div class="data-label">🛡️ Assurance/an</div>
-                            <div class="data-value">${formatNumber(vehicle.data.assurance)} MAD</div>
-                        </div>
-                        <div class="data-row highlight">
-                            <div class="data-label">⛽ Carburant/an</div>
-                            <div class="data-value">${formatNumber(vehicle.data.carburant)} MAD</div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-label">🏛️ Taxe annuelle</div>
-                            <div class="data-value">${formatNumber(vehicle.data.taxe)} MAD</div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-label">🔧 Entretien/an</div>
-                            <div class="data-value">${formatNumber(vehicle.data.entretien)} MAD</div>
-                        </div>
-                    </div>
-                `;
-                
-                vehiclesList.appendChild(vehicleCard);
-            });
-        }
-
-        function removeVehicle(id) {
-            vehicles = vehicles.filter(v => v.id !== id);
-            renderVehicles();
-            updateComparison();
-        }
-
-        function clearAllVehicles() {
-            if (confirm('Êtes-vous sûr de vouloir supprimer tous les véhicules ?')) {
-                vehicles = [];
-                renderVehicles();
-                updateComparison();
-            }
-        }
-
-        function updateComparison() {
-            if (vehicles.length < 2) {
-                comparisonSection.style.display = 'none';
-                return;
-            }
-
-            comparisonSection.style.display = 'block';
-            
-            // Trouver le véhicule le plus économique
-            const mostEconomical = vehicles.reduce((min, vehicle) => 
-                vehicle.totalAnnuel < min.totalAnnuel ? vehicle : min
-            );
-
-            let tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Critère</th>
-                            ${vehicles.map(v => `<th>${v.name}</th>`).join('')}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>🚗 Consommation (L/100km)</strong></td>
-                            ${vehicles.map(v => `<td>${v.data.consommation}</td>`).join('')}
-                        </tr>
-                        <tr>
-                            <td><strong>🛡️ Assurance/an (MAD)</strong></td>
-                            ${vehicles.map(v => `<td>${formatNumber(v.data.assurance)}</td>`).join('')}
-                        </tr>
-                        <tr>
-                            <td><strong>⛽ Carburant/an (MAD)</strong></td>
-                            ${vehicles.map(v => `<td>${formatNumber(v.data.carburant)}</td>`).join('')}
-                        </tr>
-                        <tr>
-                            <td><strong>🏛️ Taxe annuelle (MAD)</strong></td>
-                            ${vehicles.map(v => `<td>${formatNumber(v.data.taxe)}</td>`).join('')}
-                        </tr>
-                        <tr>
-                            <td><strong>🔧 Entretien/an (MAD)</strong></td>
-                            ${vehicles.map(v => `<td>${formatNumber(v.data.entretien)}</td>`).join('')}
-                        </tr>
-                        <tr style="background: #f8f9fa; font-weight: bold;">
-                            <td><strong>💰 TOTAL/AN (MAD)</strong></td>
-                            ${vehicles.map(v => `<td class="${v.id === mostEconomical.id ? 'winner-cell' : ''}">${formatNumber(v.totalAnnuel)}</td>`).join('')}
-                        </tr>
-                        <tr style="background: #e9ecef; font-weight: bold;">
-                            <td><strong>📅 TOTAL/MOIS (MAD)</strong></td>
-                            ${vehicles.map(v => `<td class="${v.id === mostEconomical.id ? 'winner-cell' : ''}">${formatNumber(v.totalMensuel)}</td>`).join('')}
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div style="text-align: center; margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #28a745, #20c997); color: white; border-radius: 15px;">
-                    <h3>🏆 Véhicule le plus économique : ${mostEconomical.name}</h3>
-                    <p>Économie annuelle : ${formatNumber(Math.max(...vehicles.map(v => v.totalAnnuel)) - mostEconomical.totalAnnuel)} MAD</p>
-                    <p>Économie mensuelle : ${formatNumber((Math.max(...vehicles.map(v => v.totalAnnuel)) - mostEconomical.totalAnnuel) / 12)} MAD</p>
-                </div>
-            `;
-            
-            document.getElementById('comparisonTable').innerHTML = tableHTML;
-        }
-
-        function showResult(message, type) {
-            resultText.textContent = message;
-            result.className = `result ${type}`;
-            result.style.display = 'block';
-            
-            // Masquer après 3 secondes
-            setTimeout(() => {
-                result.style.display = 'none';
-            }, 3000);
-        }
-
-        function formatNumber(num) {
-            if (!num) return '0';
-            return parseFloat(num).toLocaleString('fr-FR', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-        }
-
-        // Animation au chargement
-        window.addEventListener('load', () => {
-            document.querySelector('.main-container').style.animation = 'fadeIn 0.8s ease';
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('📧 Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
+            this.reset();
         });
+
+        // Animation d'entrée
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.trip-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+
+        // Mise à jour de la date minimale pour la réservation
+        document.getElementById('departureDate').min = new Date().toISOString().split('T')[0];
     </script>
 </body>
 </html>
